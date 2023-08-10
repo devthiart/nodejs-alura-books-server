@@ -1,7 +1,10 @@
+const { getAllBooks } = require("../services/book");
+
 function getBooks(req, res) {
   try {
     // throw new Error("Error: Testing error");
-    res.send('Hello World! Welcome to Book Route! This is a GET request.');
+    const books = getAllBooks();
+    res.send(books);
   }
   catch (error) {
     res.status(500);
