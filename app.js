@@ -2,6 +2,7 @@ const express = require("express");
 const bookRoute = require('./routes/book');
 
 const app = express();
+app.use(express.json()); // Enabling application to receive JSON data.
 
 app.use('/books', bookRoute);
 

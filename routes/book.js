@@ -1,20 +1,16 @@
 const { Router } = require("express");
-const { getBooks } = require("../controllers/book");
+const { getBookList, getBook, postBook, patchBook, deleteBook } = require("../controllers/book");
 
 const router = Router();
 
-router.get('/', getBooks);
+router.get('/', getBookList);
 
-router.post('/', (req, res) => {
-  res.send('Hello World! Welcome to Book Route! This is a POST request.')
-});
+router.get('/:id', getBook); // Get :id value using req.params.id in getBook function.
 
-router.patch('/', (req, res) => {
-  res.send('Hello World! Welcome to Book Route! This is a PATCH request.')
-});
+router.post('/', postBook);
 
-router.delete('/', (req, res) => {
-  res.send('Hello World! Welcome to Book Route! This is a DELETE request.')
-});
+router.patch('/:id', patchBook);
+
+router.delete('/:id', deleteBook);
 
 module.exports = router;
