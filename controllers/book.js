@@ -15,8 +15,16 @@ function getBookList(req, res) {
 function getBook(req, res) {
   try {
     const id = req.params.id;
-    const book = getBookById(id);
-    res.send(book);
+
+    // Check if id exists and if it is a number.
+    if(id && Number(id)) {
+      const book = getBookById(id);
+      res.send(book);
+    } else {
+      res.status(422); 
+      res.send("Invalid ID");
+    }
+
   }
   catch (error) {
     res.status(500);
@@ -27,9 +35,15 @@ function getBook(req, res) {
 function postBook(req, res) {
   try {
     const newBook = req.body;
-    insertBook(newBook);
-    res.status(201); // 201: Created.
-    res.send("Successfully created book");
+
+    if(newBook.name && newBook.id) {
+      insertBook(newBook);
+      res.status(201); // 201: Created.
+      res.send("Successfully created book");
+    } else {
+      res.status(422); 
+      res.send("Field name and id are mandatory");
+    }
   }
   catch(error) {
     res.status(500);
@@ -40,10 +54,16 @@ function postBook(req, res) {
 function patchBook(req, res) {
   try {
     const id = req.params.id;
-    const body = req.body;
-    editBook(body, id);
-    res.status(200);
-    res.send("Successfully edited book");
+
+    if(id && Number(id)) {
+      const body = req.body;
+      editBook(body, id);
+      res.status(200);
+      res.send("Successfully edited book");
+    } else {
+      res.status(422); 
+      res.send("Invalid ID");
+    }
   }
   catch(error) {
     res.status(500);
@@ -54,9 +74,15 @@ function patchBook(req, res) {
 function deleteBook (req, res) {
   try {
     const id = req.params.id;
-    removeBookById(id);
-    res.status(200);
-    res.send("Successfully removed book");
+    
+    if(id && Number(id)) {
+      removeBookById(id);
+      res.status(200);
+      res.send("Successfully removed book");
+    } else {
+      res.status(422); 
+      res.send("Invalid ID");
+    }
   }
   catch(error) {
     res.status(500);
